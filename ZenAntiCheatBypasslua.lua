@@ -75,24 +75,30 @@ local function shuffleInstructions(code)
     return table.concat(lines, "\n")
 end
 
--- Fonction pour afficher une alerte dans les logs de Roblox
+-- Fonction pour afficher une alerte dans la console de débogage
 local function logAlert(message)
-    warn(message)
+    print(message)
 end
 
 -- Fonction principale pour activer le bypass
 function AntiCheatBypassUltra:Enable(codeToProtect, publicKey, privateKey)
-    -- Afficher une alerte dans les logs de Roblox
-    logAlert("Zen Anti Cheat Bypass has successfully loaded !")
+    local success, err = pcall(function()
+        -- Afficher une alerte dans la console de débogage
+        logAlert("AntiCheatBypassUltra a été chargé avec succès!")
 
-    -- Mélanger les instructions
-    local shuffledCode = shuffleInstructions(codeToProtect)
+        -- Mélanger les instructions
+        local shuffledCode = shuffleInstructions(codeToProtect)
 
-    -- Ajouter des instructions inutiles
-    local codeWithUselessInstructions = addUselessInstructions(shuffledCode)
+        -- Ajouter des instructions inutiles
+        local codeWithUselessInstructions = addUselessInstructions(shuffledCode)
 
-    -- Injecter le code
-    injectCodeInMemory(codeWithUselessInstructions, publicKey, privateKey)
+        -- Injecter le code
+        injectCodeInMemory(codeWithUselessInstructions, publicKey, privateKey)
+    end)
+
+    if not success then
+        logAlert("Zen Anti Cheat Bypass has not been loaded due to an error : " .. tostring(err))
+    end
 end
 
 -- Exporter la bibliothèque
