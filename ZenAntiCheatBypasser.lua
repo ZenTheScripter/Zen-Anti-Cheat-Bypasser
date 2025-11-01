@@ -1,4 +1,4 @@
--- ZenAntiCheatBypasser.lua - Version Anti-Client-Detection
+-- ZenAntiCheatBypasser.lua - Version Corrigée
 return (function()
     -- 🛡️ BYPASS ULTRA AVANCÉ - ANTI CLIENT DETECTION
     do
@@ -10,10 +10,10 @@ return (function()
         elseif getexecutorname then EXECUTOR_TYPE = getexecutorname() or "Xeno"
         end
 
-        -- Nettoyage profond
+        -- Nettoyage profond (compatible Roblox)
         if rconsoleclear then rconsoleclear() end
         if clr then clr() end
-        collectgarbage("collect")
+        if gcinfo then gcinfo() end  -- Remplace collectgarbage
 
         -- 🔥 DÉSACTIVATION DE TOUTES LES FONCTIONS DE KICK
         pcall(function()
@@ -152,14 +152,6 @@ return (function()
                         return "{}"
                     end
                     return game.HttpGet(self, url)
-                end)
-            end
-
-            -- Couche 7: Désactive les BindToClose suspects
-            if game.BindToClose then
-                hookfunction(game.BindToClose, function(func)
-                    warn("🚫 BindToClose blocked")
-                    return nil
                 end)
             end
         end)
